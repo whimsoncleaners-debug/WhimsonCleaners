@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, ShieldCheck, Heart } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 
 export default function Footer() {
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -133,21 +135,26 @@ export default function Footer() {
       </div>
 
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
-        <div className="relative group">
-          <button className="flex items-center gap-2.5 px-5 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-2xl transition-all hover:scale-105 select-none hover:shadow-[0_0_30px_rgba(37,211,102,0.4)] cursor-pointer">
+        <div className="relative">
+          <button
+            onClick={() => setShowWhatsApp((prev) => !prev)}
+            className="flex items-center gap-2.5 px-5 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-2xl transition-all hover:scale-105 select-none hover:shadow-[0_0_30px_rgba(37,211,102,0.4)] cursor-pointer"
+          >
             <FaWhatsapp className="h-5 w-5 animate-pulse" />
             <span className="hidden sm:inline">Chat on WhatsApp</span>
           </button>
-          <div className="absolute bottom-full right-0 mb-2 w-56 rounded-xl bg-white shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
-            <a href="https://wa.me/14319905410" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-3 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors">
-              <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
-              <span>+1 431-990-5410</span>
-            </a>
-            <a href="https://wa.me/14319971150" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-3 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors border-t border-slate-100">
-              <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
-              <span>+1 431-997-1150</span>
-            </a>
-          </div>
+          {showWhatsApp && (
+            <div className="absolute bottom-full right-0 mb-2 w-56 rounded-xl bg-white shadow-2xl border border-slate-100 overflow-hidden">
+              <a href="https://wa.me/14319905410" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-3 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors" onClick={() => setShowWhatsApp(false)}>
+                <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
+                <span>+1 431-990-5410</span>
+              </a>
+              <a href="https://wa.me/14319971150" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-3 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors border-t border-slate-100" onClick={() => setShowWhatsApp(false)}>
+                <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
+                <span>+1 431-997-1150</span>
+              </a>
+            </div>
+          )}
         </div>
       </div>
 

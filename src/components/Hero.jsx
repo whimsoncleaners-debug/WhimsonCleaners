@@ -1,4 +1,5 @@
 import { Award, Flame, Users, ArrowRight } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Hero() {
   const scrollToGallery = () => {
@@ -33,7 +34,7 @@ export default function Hero() {
             
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-semibold uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-              <span>🔥 45% OFF - First Booking</span>
+              <span>45% OFF - First Booking</span>
             </div>
 
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight lg:leading-[1.1]">
@@ -60,6 +61,15 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+              <a
+                href="https://wa.me/14319905410"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-[#25D366]/20 hover:shadow-xl hover:shadow-[#25D366]/30 hover:-translate-y-0.5 cursor-pointer"
+              >
+                <FaWhatsapp className="h-5 w-5" />
+                <span>WhatsApp Us</span>
+              </a>
               <button
                 onClick={scrollToGallery}
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 text-white font-semibold text-base rounded-xl transition-all cursor-pointer"
