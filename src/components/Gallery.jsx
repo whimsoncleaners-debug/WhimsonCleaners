@@ -164,77 +164,74 @@ export default function Gallery() {
 
       </div>
 
-      {activeModalItemIndex !== null && filteredImages[activeModalItemIndex] && (
-        <AnimatePresence>
-          {activeModalItemIndex !== null && filteredImages[activeModalItemIndex] && (
+      <AnimatePresence>
+        {activeModalItemIndex !== null && filteredImages[activeModalItemIndex] && (
+          <motion.div
+            key="modal-overlay"
+            className="fixed inset-0 z-55 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveModalItemIndex(null)}
+          >
             <motion.div
-              className="fixed inset-0 z-55 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActiveModalItemIndex(null)}
+              key="modal-content"
+              className="relative max-w-4xl w-full flex flex-col items-center bg-transparent"
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 30 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <motion.div
-                className="relative max-w-4xl w-full flex flex-col items-center bg-transparent"
-                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                onClick={(e) => e.stopPropagation()}
-              >
-            <div className="w-full flex justify-between items-center text-white mb-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-sky-400" />
-                <span className="text-xs font-semibold tracking-wider uppercase text-slate-300">
-                  Resolution Capture Frame
-                </span>
+              <div className="w-full flex justify-between items-center text-white mb-3">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-sky-400" />
+                  <span className="text-xs font-semibold tracking-wider uppercase text-slate-300">
+                    Resolution Capture Frame
+                  </span>
+                </div>
+                <button
+                  onClick={() => setActiveModalItemIndex(null)}
+                  className="p-2 rounded-xl text-slate-400 hover:text-white cursor-pointer hover:bg-white/10"
+                >
+                  <X className="h-5 w-5" />
+                </button>
               </div>
-              <button
-                onClick={() => setActiveModalItemIndex(null)}
-                className="p-2 rounded-xl text-slate-400 hover:text-white cursor-pointer hover:bg-white/10"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="relative w-full aspect-video md:aspect-auto md:h-[500px] rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 group">
-              <img
-                src={filteredImages[activeModalItemIndex].imageUrl}
-                alt={filteredImages[activeModalItemIndex].title}
-                className="w-full h-full object-contain"
-                referrerPolicy="no-referrer"
-              />
-
-              <button
-                onClick={handlePrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/60 hover:bg-slate-900/80 border border-slate-700/80 text-white cursor-pointer transition-all"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                onClick={handleNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/60 hover:bg-slate-900/80 border border-slate-700/80 text-white cursor-pointer transition-all"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="w-full text-left text-white mt-4 space-y-1.5 bg-slate-900/50 p-6 rounded-2xl border border-slate-850">
-              <span className="text-xs uppercase text-sky-400 font-bold font-mono tracking-wider">
-                {filteredImages[activeModalItemIndex].category} Client Showcase
-              </span>
-              <h3 className="font-display font-bold text-lg md:text-xl">
-                {filteredImages[activeModalItemIndex].title}
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed font-light">
-                {filteredImages[activeModalItemIndex].description}
-              </p>
-            </div>
-
-          </motion.div>
+              <div className="relative w-full aspect-video md:aspect-auto md:h-[500px] rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 group">
+                <img
+                  src={filteredImages[activeModalItemIndex].imageUrl}
+                  alt={filteredImages[activeModalItemIndex].title}
+                  className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                />
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/60 hover:bg-slate-900/80 border border-slate-700/80 text-white cursor-pointer transition-all"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/60 hover:bg-slate-900/80 border border-slate-700/80 text-white cursor-pointer transition-all"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="w-full text-left text-white mt-4 space-y-1.5 bg-slate-900/50 p-6 rounded-2xl border border-slate-850">
+                <span className="text-xs uppercase text-sky-400 font-bold font-mono tracking-wider">
+                  {filteredImages[activeModalItemIndex].category} Client Showcase
+                </span>
+                <h3 className="font-display font-bold text-lg md:text-xl">
+                  {filteredImages[activeModalItemIndex].title}
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed font-light">
+                  {filteredImages[activeModalItemIndex].description}
+                </p>
+              </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </section>
   );
