@@ -1,4 +1,14 @@
+import { motion } from 'framer-motion';
 import { Droplets, CheckCircle2, Eye } from 'lucide-react';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.15 } },
+};
 
 export default function About() {
   const coreValues = [
@@ -35,7 +45,13 @@ export default function About() {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          <div className="lg:col-span-6 relative">
+          <motion.div
+            className="lg:col-span-6 relative"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white">
               <img
                 src="/hero.avif"
@@ -44,7 +60,13 @@ export default function About() {
                 referrerPolicy="no-referrer"
               />
               
-              <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-white/90 backdrop-blur-md shadow-lg border border-white/20">
+              <motion.div
+                className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-white/90 backdrop-blur-md shadow-lg border border-white/20"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-xl text-white">
                     <Droplets className="h-5 w-5 animate-pulse" />
@@ -54,15 +76,21 @@ export default function About() {
                     <p className="text-[11px] text-slate-500 font-light mt-0.5">Dual de-ionization system for luxury window glass.</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             <div className="absolute -bottom-8 -left-8 w-64 h-64 border-4 border-dashed border-sky-200/50 rounded-full z-[-1]" />
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-6 space-y-8 text-left">
+          <motion.div
+            className="lg:col-span-6 space-y-8 text-left"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={stagger}
+          >
             
-            <div className="space-y-4">
+            <motion.div className="space-y-4" variants={fadeUp}>
               <span className="text-xs font-bold text-sky-500 uppercase tracking-widest block">
                 WHY CHOOSE US
               </span>
@@ -72,13 +100,13 @@ export default function About() {
               <p className="text-slate-500 text-base sm:text-lg font-light leading-relaxed">
                 At Whimson Cleaners, we specialize in window cleaning, commercial cleaning, and residential cleaning. Our team uses professional-grade equipment and eco-friendly products to deliver spotless results every time.
               </p>
-            </div>
+            </motion.div>
 
             <div className="space-y-6">
               {coreValues.map((val, index) => {
                 const CoreIcon = val.icon;
                 return (
-                  <div key={index} className="flex gap-4">
+                  <motion.div key={index} variants={fadeUp} className="flex gap-4">
                     <div className="p-3 bg-white border border-slate-100 text-sky-500 rounded-xl h-fit shadow-sm shrink-0">
                       <CoreIcon className="h-5 w-5" />
                     </div>
@@ -86,12 +114,12 @@ export default function About() {
                       <h4 className="font-semibold text-slate-900 text-sm leading-snug">{val.title}</h4>
                       <p className="text-slate-500 text-xs sm:text-sm font-light leading-relaxed mt-1">{val.desc}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
 
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 text-white flex flex-col sm:flex-row items-center gap-4 shadow-lg shadow-sky-500/10">
+            <motion.div variants={fadeUp} className="p-6 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 text-white flex flex-col sm:flex-row items-center gap-4 shadow-lg shadow-sky-500/10">
               <div className="p-3 bg-white/10 rounded-xl animate-pulse shrink-0">
                 <CheckCircle2 className="h-8 w-8 text-white" />
               </div>
@@ -101,18 +129,18 @@ export default function About() {
                   Call us today at +1 431-990-5410 or +1 431-997-1150 to claim your 45% OFF discount on your first window cleaning service!
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="pt-2">
+            <motion.div variants={fadeUp} className="pt-2">
               <button
                 onClick={scrollToCalculator}
                 className="px-6 py-3 bg-slate-950 hover:bg-slate-800 text-white font-semibold text-xs uppercase tracking-widest rounded-xl transition-colors cursor-pointer"
               >
                 Book Now - 45% OFF
               </button>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
         </div>
 

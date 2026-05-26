@@ -1,5 +1,15 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+};
 
 export default function FAQ() {
   const faqs = [
@@ -42,25 +52,38 @@ export default function FAQ() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 rounded-full text-xs font-semibold uppercase tracking-wider text-sky-600">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16 space-y-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+        >
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 rounded-full text-xs font-semibold uppercase tracking-wider text-sky-600">
             <HelpCircle className="h-3.5 w-3.5" />
             <span>KNOWLEDGE DESK</span>
-          </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
+          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
             Common Inquiries Solved
-          </h2>
-          <p className="text-slate-500 text-sm sm:text-base font-light leading-relaxed">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-slate-500 text-sm sm:text-base font-light leading-relaxed">
             Find answers about our window cleaning, commercial cleaning, and residential cleaning services.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="space-y-4 text-left">
+        <motion.div
+          className="space-y-4 text-left"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={stagger}
+        >
           {faqs.map((faq) => {
             const isOpen = activeFaqId === faq.id;
             return (
-              <div
+              <motion.div
                 key={faq.id}
+                variants={fadeUp}
                 className={`bg-white rounded-2xl border transition-all ${
                   isOpen ? 'border-sky-400 shadow-lg shadow-sky-500/5' : 'border-slate-100 hover:border-slate-300'
                 }`}
@@ -77,15 +100,25 @@ export default function FAQ() {
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="px-6 pb-6 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed font-light border-t border-slate-50/50">
-                    <p>{faq.answer}</p>
-                  </div>
-                )}
-              </div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed font-light border-t border-slate-50/50">
+                        <p>{faq.answer}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>

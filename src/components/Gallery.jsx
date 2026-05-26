@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Image, Search, X, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.08 } },
+};
 
 export default function Gallery() {
   const images = [
@@ -61,20 +71,32 @@ export default function Gallery() {
     <section id="gallery" className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 rounded-full text-xs font-semibold uppercase tracking-wider text-sky-600">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16 space-y-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+        >
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 rounded-full text-xs font-semibold uppercase tracking-wider text-sky-600">
             <Image className="h-3.5 w-3.5" />
             <span>PORTFOLIO EXHIBITION</span>
-          </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
+          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
             Crystalline Clarity Captured
-          </h2>
-          <p className="text-slate-500 text-sm sm:text-base font-light leading-relaxed max-w-lg mx-auto">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-slate-500 text-sm sm:text-base font-light leading-relaxed max-w-lg mx-auto">
             Browse through our work - professional window cleaning, commercial cleaning, and residential cleaning projects by Whimson Cleaners.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="flex flex-wrap justify-center items-center gap-2 mb-10 max-w-lg mx-auto bg-slate-150/40 p-1.5 rounded-2xl border border-slate-100">
+        <motion.div
+          className="flex flex-wrap justify-center items-center gap-2 mb-10 max-w-lg mx-auto bg-slate-150/40 p-1.5 rounded-2xl border border-slate-100"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           {[
             { id: 'all', title: 'All Projects' },
             { id: 'residential', title: 'Residential' },
@@ -92,13 +114,20 @@ export default function Gallery() {
             >
               {item.title}
             </button>
-          ))}
-        </div>
+            ))}
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={stagger}
+        >
           {filteredImages.map((img, index) => (
-            <div
+            <motion.div
               key={img.id}
+              variants={fadeUp}
               onClick={() => setActiveModalItemIndex(index)}
               className="group relative h-[320px] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition-all cursor-pointer hover:-translate-y-1"
             >
@@ -123,9 +152,9 @@ export default function Gallery() {
                   {img.title}
                 </h4>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {filteredImages.length === 0 && (
           <div className="text-center py-12 text-slate-400">
@@ -136,14 +165,23 @@ export default function Gallery() {
       </div>
 
       {activeModalItemIndex !== null && filteredImages[activeModalItemIndex] && (
-        <div
-          className="fixed inset-0 z-55 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setActiveModalItemIndex(null)}
-        >
-          <div
-            className="relative max-w-4xl w-full flex flex-col items-center bg-transparent"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <AnimatePresence>
+          {activeModalItemIndex !== null && filteredImages[activeModalItemIndex] && (
+            <motion.div
+              className="fixed inset-0 z-55 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveModalItemIndex(null)}
+            >
+              <motion.div
+                className="relative max-w-4xl w-full flex flex-col items-center bg-transparent"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                onClick={(e) => e.stopPropagation()}
+              >
             <div className="w-full flex justify-between items-center text-white mb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-sky-400" />
@@ -193,9 +231,10 @@ export default function Gallery() {
               </p>
             </div>
 
-          </div>
-        </div>
-      )}
+          </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
     </section>
   );

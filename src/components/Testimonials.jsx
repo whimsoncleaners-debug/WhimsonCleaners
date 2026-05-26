@@ -1,5 +1,15 @@
 import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Star, ArrowLeftRight, Users } from 'lucide-react';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.12 } },
+};
 
 export default function Testimonials() {
   const reviews = [
@@ -63,20 +73,32 @@ export default function Testimonials() {
     <section id="testimonials" className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 rounded-full text-xs font-semibold uppercase tracking-wider text-sky-600">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16 space-y-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+        >
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 rounded-full text-xs font-semibold uppercase tracking-wider text-sky-600">
             <Users className="h-3.5 w-3.5" />
             <span>CLIENT REPUTATION</span>
-          </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
+          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
             Trust Formed in Perfect Clarity
-          </h2>
-          <p className="text-slate-500 text-sm sm:text-base font-light leading-relaxed max-w-lg mx-auto">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-slate-500 text-sm sm:text-base font-light leading-relaxed max-w-lg mx-auto">
             See what our clients say about our window cleaning, commercial cleaning, and residential cleaning services.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="max-w-3xl mx-auto mb-20">
+        <motion.div
+          className="max-w-3xl mx-auto mb-20"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
           <div
             ref={containerRef}
             onClick={handleSliderClick}
@@ -125,12 +147,19 @@ export default function Testimonials() {
           <div className="w-full text-center mt-3 text-xs text-slate-400 font-light flex items-center justify-center gap-2">
             <span>&larr; Drag slider to inspect active window cleaning transformations &rarr;</span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={stagger}
+        >
           {reviews.map((rev) => (
-            <div
+            <motion.div
               key={rev.id}
+              variants={fadeUp}
               className="p-8 rounded-3xl bg-slate-50 border border-slate-100/80 text-left flex flex-col justify-between relative"
             >
               <div className="space-y-4">
@@ -157,9 +186,9 @@ export default function Testimonials() {
                   <span className="text-[10px] text-slate-400 block mt-1">{rev.servicePurchased}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

@@ -1,4 +1,14 @@
+import { motion } from 'framer-motion';
 import { Layers, Sparkles, Wand2, ShieldCheck, Sun, Building, ArrowRight } from 'lucide-react';
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
 
 export default function Services() {
   const serviceList = [
@@ -69,19 +79,49 @@ export default function Services() {
     <section id="services" className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-end mb-16">
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-end mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
+        >
           <div className="lg:col-span-7 space-y-4 text-left">
-            <span className="text-xs font-bold text-sky-500 uppercase tracking-widest block">
+            <motion.span
+              className="text-xs font-bold text-sky-500 uppercase tracking-widest block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               OUR SERVICES
-            </span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none">
+            </motion.span>
+            <motion.h2
+              className="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight leading-none"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
               Professional Cleaning Solutions
-            </h2>
-            <p className="text-slate-500 text-base sm:text-lg font-light leading-relaxed max-w-xl">
+            </motion.h2>
+            <motion.p
+              className="text-slate-500 text-base sm:text-lg font-light leading-relaxed max-w-xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               Whimson Cleaners offers window cleaning, commercial cleaning, and residential cleaning services. Our expert team uses eco-friendly products for crystal-clear results.
-            </p>
+            </motion.p>
           </div>
-          <div className="lg:col-span-5 flex lg:justify-end">
+          <motion.div
+            className="lg:col-span-5 flex lg:justify-end"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <button
               onClick={scrollToCalculator}
               className="group flex items-center gap-2 px-6 py-3.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-slate-800 font-semibold text-sm rounded-xl transition-all cursor-pointer hover:shadow"
@@ -89,15 +129,22 @@ export default function Services() {
               <span>Get 45% OFF Your First Booking</span>
               <ArrowRight className="h-4 w-4 text-sky-500 group-hover:translate-x-1 transition-transform" />
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={stagger}
+        >
           {serviceList.map((srv) => {
             const IconComponent = srv.icon;
             return (
-              <div
+              <motion.div
                 key={srv.id}
+                variants={fadeUp}
                 className="group p-8 rounded-3xl bg-slate-50/20 hover:bg-white border border-slate-100 hover:border-slate-200 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-slate-100 hover:-translate-y-1 relative flex flex-col justify-between"
               >
                 <div className="space-y-6">
@@ -135,10 +182,10 @@ export default function Services() {
                     <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>

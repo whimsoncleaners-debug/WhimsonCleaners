@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Flame, Users, ArrowRight } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
@@ -42,27 +43,56 @@ export default function Hero() {
 
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 space-y-8 text-left">
+          <motion.div
+            className="lg:col-span-7 space-y-8 text-left"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.15 } },
+            }}
+          >
             
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-semibold uppercase tracking-wider">
+            <motion.div
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-semibold uppercase tracking-wider"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }}
+            >
               <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
               <span>45% OFF - First Booking</span>
-            </div>
+            </motion.div>
 
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight lg:leading-[1.1]">
+            <motion.h1
+              className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight lg:leading-[1.1]"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }}
+            >
               Whimson Cleaners <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-sky-300 to-blue-400">
                 Professional Window Cleaning
               </span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-slate-300 text-lg sm:text-xl max-w-xl font-light leading-relaxed">
+            <motion.p
+              className="text-slate-300 text-lg sm:text-xl max-w-xl font-light leading-relaxed"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }}
+            >
               We offer professional window cleaning, commercial cleaning, and residential cleaning services. Using eco-friendly products and expert techniques, we deliver crystal-clear results for homes and businesses.
-            </p>
+            </motion.p>
 
-
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+            <motion.div
+              className="flex flex-col sm:flex-row items-center gap-4 pt-2"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }}
+            >
               <div className="relative w-full sm:w-auto" ref={waRef}>
                 <button
                   onClick={() => setShowWhatsApp((prev) => !prev)}
@@ -91,11 +121,16 @@ export default function Hero() {
                 <span>View Recent Work</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+          <motion.div
+            className="lg:col-span-5 flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+          >
             <div className="w-full max-w-md p-8 rounded-3xl bg-slate-950/85 backdrop-blur-xl border border-slate-800 shadow-2xl relative overflow-hidden space-y-6">
               <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-3xl" />
               
@@ -135,7 +170,7 @@ export default function Hero() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

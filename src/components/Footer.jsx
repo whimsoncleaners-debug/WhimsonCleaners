@@ -1,7 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, ShieldCheck, Heart } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import logo from '../assets/logo.png';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+};
 
 export default function Footer() {
   const [showWhatsApp, setShowWhatsApp] = useState(false);
@@ -34,9 +44,15 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pb-12 border-b border-slate-900">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pb-12 border-b border-slate-900"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={stagger}
+        >
           
-          <div className="md:col-span-4 space-y-5">
+          <motion.div className="md:col-span-4 space-y-5" variants={fadeUp}>
             <div className="flex items-center gap-2">
               <img
                 src={logo}
@@ -57,9 +73,9 @@ export default function Footer() {
                 <span className="text-[11px] text-slate-400 block">45% OFF first booking - Call now!</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="md:col-span-3 space-y-4">
+          <motion.div className="md:col-span-3 space-y-4" variants={fadeUp}>
             <h4 className="font-display font-medium text-white text-sm tracking-widest uppercase">
               Our Services
             </h4>
@@ -81,9 +97,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="md:col-span-2 space-y-4">
+          <motion.div className="md:col-span-2 space-y-4" variants={fadeUp}>
             <h4 className="font-display font-medium text-white text-sm tracking-widest uppercase">
               Quick Links
             </h4>
@@ -95,9 +111,9 @@ export default function Footer() {
               <li>Contact</li>
               <li>FAQ</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="md:col-span-3 space-y-4 text-xs font-light text-slate-400">
+          <motion.div className="md:col-span-3 space-y-4 text-xs font-light text-slate-400" variants={fadeUp}>
             <h4 className="font-display font-medium text-white text-sm tracking-widest uppercase">
               Contact Us
             </h4>
@@ -126,11 +142,17 @@ export default function Footer() {
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
-        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+        <motion.div
+          className="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           <p className="font-light">
             &copy; {new Date().getFullYear()} Whimson Cleaners. All rights reserved.
           </p>
@@ -139,7 +161,7 @@ export default function Footer() {
             <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500" />
             <span>Call +1 431-990-5410</span>
           </div>
-        </div>
+        </motion.div>
 
       </div>
 
