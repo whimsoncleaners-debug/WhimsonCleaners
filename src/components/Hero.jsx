@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Award, Flame, Users, ArrowRight } from 'lucide-react';
+import { Flame, Users, ArrowRight } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Hero() {
@@ -60,17 +60,7 @@ export default function Hero() {
               We offer professional window cleaning, commercial cleaning, and residential cleaning services. Using eco-friendly products and expert techniques, we deliver crystal-clear results for homes and businesses.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg">
-<div className="flex items-start gap-2.5">
-                <div className="p-1 bg-sky-500/25 rounded-md text-sky-400 mt-1">
-                  <Award className="h-4 w-4" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-slate-100 text-sm">Streak-Free Guarantee</h4>
-                  <p className="text-xs text-slate-400">Free re-clean within 48 hours if rain spots appear</p>
-                </div>
-              </div>
-            </div>
+
 
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
               <div className="relative w-full sm:w-auto" ref={waRef}>
