@@ -173,15 +173,6 @@ export default function Services() {
                   </ul>
                 </div>
 
-                <div className="pt-6 mt-6 flex justify-end">
-                  <span
-                    onClick={scrollToCalculator}
-                    className="flex items-center gap-1.5 text-xs font-bold text-sky-500 group-hover:text-sky-600 cursor-pointer select-none"
-                  >
-                    <span>Request Quote</span>
-                    <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                </div>
               </motion.div>
             );
           })}
