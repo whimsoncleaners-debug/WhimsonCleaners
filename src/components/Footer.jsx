@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Phone, Mail, MapPin, Clock, ShieldCheck, Heart } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 
 export default function Footer() {
   const [showWhatsApp, setShowWhatsApp] = useState(false);
+  const waRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (waRef.current && !waRef.current.contains(e.target)) setShowWhatsApp(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -135,7 +144,7 @@ export default function Footer() {
       </div>
 
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
-        <div className="relative">
+        <div className="relative" ref={waRef}>
           <button
             onClick={() => setShowWhatsApp((prev) => !prev)}
             className="flex items-center gap-2.5 px-5 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-2xl transition-all hover:scale-105 select-none hover:shadow-[0_0_30px_rgba(37,211,102,0.4)] cursor-pointer"

@@ -1,7 +1,19 @@
+import { useState, useEffect, useRef } from 'react';
 import { Award, Flame, Users, ArrowRight } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Hero() {
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
+  const waRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (waRef.current && !waRef.current.contains(e.target)) setShowWhatsApp(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
   const scrollToGallery = () => {
     const element = document.getElementById('gallery');
     if (element) {
@@ -61,15 +73,27 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-              <a
-                href="https://wa.me/14319905410"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-[#25D366]/20 hover:shadow-xl hover:shadow-[#25D366]/30 hover:-translate-y-0.5 cursor-pointer"
-              >
-                <FaWhatsapp className="h-5 w-5" />
-                <span>WhatsApp Us</span>
-              </a>
+              <div className="relative w-full sm:w-auto" ref={waRef}>
+                <button
+                  onClick={() => setShowWhatsApp((prev) => !prev)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-[#25D366]/20 hover:shadow-xl hover:shadow-[#25D366]/30 hover:-translate-y-0.5 cursor-pointer"
+                >
+                  <FaWhatsapp className="h-5 w-5" />
+                  <span>WhatsApp Us</span>
+                </button>
+                {showWhatsApp && (
+                  <div className="absolute top-full left-0 right-0 mt-2 w-full rounded-xl bg-white shadow-2xl border border-slate-100 overflow-hidden z-50">
+                    <a href="https://wa.me/14319905410" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-3 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors" onClick={() => setShowWhatsApp(false)}>
+                      <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
+                      <span>+1 431-990-5410</span>
+                    </a>
+                    <a href="https://wa.me/14319971150" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-3 text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors border-t border-slate-100" onClick={() => setShowWhatsApp(false)}>
+                      <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
+                      <span>+1 431-997-1150</span>
+                    </a>
+                  </div>
+                )}
+              </div>
               <button
                 onClick={scrollToGallery}
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 text-white font-semibold text-base rounded-xl transition-all cursor-pointer"
